@@ -4,7 +4,7 @@ class Pages extends CI_Controller
     //Handles routing requests of the app
     public function view($page = 'home')
     {
-        if(!file_exists(APPPATH.'views/'.$page.'.php')){
+        if (!file_exists(APPPATH . 'views/' . $page . '.php')) {
             show_404();
         }
 
