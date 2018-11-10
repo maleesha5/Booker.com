@@ -7,7 +7,7 @@ class Pages extends CI_Controller
         if (!file_exists(APPPATH . 'views/' . $page . '.php')) {
             show_404();
         }
-
+        print_r('sss');
         $data['title'] = ucfirst($page);
 
         $this->load->view('header');

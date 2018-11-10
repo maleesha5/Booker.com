@@ -47,3 +47,6 @@
       <?php if ($this->session->flashdata('user_logout')): ?>
         <?php echo '<p class="alert alert-info">' . $this->session->flashdata('user_logout') . '</p>'; ?>
       <?php endif;?>
+      <?php if ($this->session->flashdata('item_added')): ?>
+        <?php echo '<p class="alert alert-info">' . $this->session->flashdata('item_added') . '</p>'; ?>
+      <?php endif;?>

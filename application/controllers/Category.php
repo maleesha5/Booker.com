@@ -25,11 +25,21 @@ class Category extends CI_Controller
 
     }
 
-    public function get_category($id)
+    public function get_category($id, $offset = 0)
     {
+        // Pagination Config
+        $config['base_url'] = base_url() . 'book/index/';
+        $config['total_rows'] = $this->db->count_all('book');
+        $config['per_page'] = 8;
+        $config['uri_segment'] = 3;
+        $config['attributes'] = array('class' => 'pagination-link');
+
+        // Init Pagination
+        $this->pagination->initialize($config);
+
         $data['title'] = $this->category_model->get_category($id)->name;
         $data['categories'] = $this->category_model->get_categories();
-        $data['books'] = $this->book_model->get_books_by_category($id);
+        $data['books'] = $this->book_model->get_books_by_category($id, $config['per_page'], $offset);
 
         $this->load->view('header');
         $this->load->view('book/index', $data);

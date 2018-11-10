@@ -50,6 +50,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |        my-controller/my-method    -> my_controller/my_method
  */
 $route['book'] = 'book/index';
+$route['book/create'] = 'book/create';
+$route['book/view/(:any)'] = 'book/view/$1';
+
+$route['cart/add/(:any)'] = 'cart/add_to_cart/$1';
+$route['cart'] = 'cart/index';
 
 $route['admin'] = 'admin/login';
 

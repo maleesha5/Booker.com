@@ -6,7 +6,7 @@ class Book extends CI_Controller
         // Pagination Config
         $config['base_url'] = base_url() . 'book/index/';
         $config['total_rows'] = $this->db->count_all('book');
-        $config['per_page'] = 10;
+        $config['per_page'] = 8;
         $config['uri_segment'] = 3;
         $config['attributes'] = array('class' => 'pagination-link');
 
@@ -15,6 +15,7 @@ class Book extends CI_Controller
 
         $data['categories'] = $this->category_model->get_categories();
         $data['books'] = $this->book_model->get_books($config['per_page'], $offset);
+
         $this->load->view('header');
         $this->load->view('book/index', $data);
         $this->load->view('footer');
@@ -39,5 +40,22 @@ class Book extends CI_Controller
             $this->book_model->create_book();
             redirect('book');
         }
+    }
+
+    public function view($book_id)
+    {
+        $user_identifier = $this->session->userdata('user_identifier');
+        if (!$user_identifier) {
+            $user_identifier = uniqid();
+            $this->session->set_userdata('user_identifier', $user_identifier);
+        }
+        $this->book_model->record_view($book_id, $user_identifier);
+
+        $data['book'] = $this->book_model->get_book_by_id($book_id);
+        $data['books'] = $this->book_model->get_top5_recommendations($book_id, $user_identifier);
+
+        $this->load->view('header');
+        $this->load->view('book/view', $data);
+        $this->load->view('footer');
     }
 }
